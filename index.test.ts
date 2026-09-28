@@ -11,5 +11,5 @@ test("addiere negative zahlen", () => {
 
 
 test("Dividieren durch Null soll einen Fehler werfen", () => {
-    expect(() => dividiere(10,0)).toThrow("Teilen durch Null ist nicht Erlaubt!")
-})
+    expect(() => dividiere(10,0)).toThrow("Teilen durch Null ist nicht erlaubt!")
+});
