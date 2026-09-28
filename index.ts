@@ -5,6 +5,9 @@ export function addiere(a: number, b: number): number {
 
 console.log(`Ergebnis: ${addiere(5, 5)}`);
 
-
-const thisonehere: number = 67
-console.log(`Das Ergebnis von 5 + 2 = ${addiere(5,2)}`)
+export function dividiere(a: number, b: number): number {
+  if (b === 0) {
+    throw new Error("Teilen durch Null ist nicht erlaubt!");
+  }
+  return a / b;
+}
