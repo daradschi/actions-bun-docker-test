@@ -1,0 +1,46 @@
+name: TypeScript, Bun & Docker Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-app:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Code aus dem Repository auf den GitHub-Server auschecken
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      # 2. Bun auf dem GitHub-Server installieren
+      - name: Bun installieren
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # 3. Abhängigkeiten installieren (falls du npm-Pakete nutzt)
+      - name: Abhängigkeiten installieren
+        run: bun install
+
+      # 4. Den eben geschriebenen Test ausführen
+      - name: Tests ausführen
+        run: bun test
+
+  build-docker:
+    runs-on: ubuntu-latest
+    # Dieser Job wartet, bis 'test-app' erfolgreich fertig ist
+    needs: test-app
+
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      # GitHub-Server haben Docker bereits vorinstalliert!
+      - name: Docker Image bauen
+        run: docker build -t mein-bun-app:latest .
+
+      - name: Docker Image testen
+        run: docker run --rm mein-bun-app:latest
